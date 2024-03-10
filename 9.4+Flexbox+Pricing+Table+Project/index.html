@@ -12,9 +12,60 @@
       body {
         font-family: "Sono", sans-serif;
       }
+      .pricing-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        gap: 2rem;
+      }
 
+      /* corresponds to each item in the container */
+      .pricing-plan {
+        flex: 1;
+        max-width: 400px;
+        padding: 20px;
+        background-color: lightgray;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .pricing-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .plan-price {
+        font-size: 48px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .plan-features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .plan-features li {
+        margin-bottom: 20px;
+      }
+
+      .plan-button {
+        background-color: orange;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+      }
       /* Hint: What can you do with a media query and flexbox? */
+      /*And what that does is when this gets under 1250px, then it goes into a vertical Flexbox, which is really nice.It makes more use of the space.And I've set that height to 100% because remember previously, we had the height set to 100 viewport height, which means the height of our container is going to try and be as high as our viewport, which is only the space that we have here now because we have more content than viewport height, it's actually better to set it to 100% so that it' not limited. */
       @media (max-width: 1250px) {
+        .pricing-container {
+          flex-direction: column;
+          height: 100%;
+        }
       }
     </style>
   </head>
