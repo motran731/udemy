@@ -2,7 +2,9 @@ var numberOfDrumButtons = document.querySelectorAll(".drum").length;
 
 for (var i = 0; i < numberOfDrumButtons; i++) {
   document.querySelectorAll(".drum")[i].addEventListener("click", function () {
-    var buttonInnerHTML = this.InnerHTML; //this letter is clicked
+    this.style.color = "white";
+
+    var buttonInnerHTML = this.innerHTML; //this letter is clicked
 
     switch (buttonInnerHTML) {
       case "w":
@@ -31,8 +33,8 @@ for (var i = 0; i < numberOfDrumButtons; i++) {
         break;
 
       case "k":
-        var kickBass = new Audio("sounds/kick-bass.mp3");
-        kickBass.play();
+        var kick = new Audio("sounds/kick-bass.mp3");
+        kick.play();
         break;
 
       case "l":
@@ -41,6 +43,7 @@ for (var i = 0; i < numberOfDrumButtons; i++) {
         break;
 
       default:
+        console.log(buttonInnerHTML);
     }
   });
 }
