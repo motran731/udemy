@@ -2,8 +2,6 @@ var numberOfDrumButtons = document.querySelectorAll(".drum").length;
 
 for (var i = 0; i < numberOfDrumButtons; i++) {
   document.querySelectorAll(".drum")[i].addEventListener("click", function () {
-    //this.style.color = "white";
-
     var buttonInnerHTML = this.innerHTML; //this letter is clicked
     makeSound(buttonInnerHTML);
 
@@ -18,9 +16,7 @@ document.addEventListener("keypress", function (event) {
   buttonAnimation(event.key);
 });
 
-//var audio = new Audio("sounds/tom-1.mp3");
-//   audio.play();
-//this.style.color = "white";
+//function(event) - callback function
 function makeSound(key) {
   switch (key) {
     case "w":
