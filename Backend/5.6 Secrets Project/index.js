@@ -27,8 +27,6 @@ app.get("/", async (req, res) => {
   }
 });
 
-//scret and username are the key from the key value of the website
-
 // 6. Listen on your predefined port and start the server.
 app.listen(port, () => {
   console.log(`You got served on ${port}`);
