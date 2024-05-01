@@ -7,9 +7,11 @@ body {
   padding-top: 2rem;
   padding-bottom: 2rem;
   box-sizing: border-box;
+  color: hotpink;
 }
 h1 {
   color: white;
   font-family: "Titan One", cursive;
   margin-bottom: 20px;
+  font-size: 3.5rem;
 }
