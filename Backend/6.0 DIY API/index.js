@@ -37,12 +37,47 @@ app.post("/jokes", (req, res) => {
   console.log(jokes.slice(-1));
   res.json(newJoke); //send back the new joke data in json format
 });
-//5. PUT a joke
+//5. PUT a joke -complete update
 
+app.put("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const replaceJoke = {
+    id: id,
+    jokeText: req.body.text,
+    jokeType: req.body.type,
+  };
+  const searchIndex = jokes.findIndex((joke) => joke.id === id);
+  jokes[searchIndex] = replaceJoke;
+  res.json(replaceJoke);
+});
 //6. PATCH a joke
 
-//7. DELETE Specific joke
+app.patch("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const existingJoke = jokes.find((joke) => joke.id === id);
+  const patchJoke = {
+    id: id,
+    jokeText: req.body.text || existingJoke,
+    jokeType: req.body.type || existingJoke,
+  };
+  const searchIndex = jokes.findIndex((joke) => joke.id === id);
+  jokes[searchIndex] = patchJoke;
+  console.log(jokes[searchIndex]);
+  res.json(patchJoke);
+});
 
+//7. DELETE Specific joke
+app.delete("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const deleteJokeByIndex = jokes.findIndex((joke) => joke.id === id);
+  if (deleteJokeByIndex > -1) {
+    jokes.splice(deleteJokeByIndex, 1); //remove 1, second param is "remove counter"
+    res.sendStatus(200);
+  } else {
+    res.status(400);
+    res.json({ error: `Joke with id: ${id} not found. No jokes were deleted` });
+  }
+});
 //8. DELETE All jokes
 
 app.listen(port, () => {
