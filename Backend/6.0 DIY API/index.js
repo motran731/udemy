@@ -5,7 +5,7 @@ const app = express();
 const port = 3000;
 const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true })); //express middleware
 
 //1. GET a random joke
 app.get("/random", (req, res) => {
@@ -27,7 +27,16 @@ app.get("/filter", (req, res) => {
   res.json(filterType);
 });
 //4. POST a new joke
-
+app.post("/jokes", (req, res) => {
+  const newJoke = {
+    id: jokes.length + 1,
+    jokeText: req.body.text,
+    jokeType: req.body.type,
+  };
+  jokes.push(newJoke);
+  console.log(jokes.slice(-1));
+  res.json(newJoke); //send back the new joke data in json format
+});
 //5. PUT a joke
 
 //6. PATCH a joke
