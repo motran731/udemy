@@ -12,6 +12,7 @@ app.get("/random", (req, res) => {
   const randomIndex = Math.floor(Math.randonm() * jokes.length);
   res.json(jokes[randomIndex]);
 });
+
 //2. GET a specific joke
 
 app.get("/jokes/:id", (req, res) => {
