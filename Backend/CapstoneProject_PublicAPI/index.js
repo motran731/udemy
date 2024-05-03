@@ -18,20 +18,28 @@ app.get("/submit", async (req, res) => {
     let character = {
       classes: "",
       race: "",
-      skills: "",
+      skills: [],
       damageType: "",
     };
     // ----- MAKE REQUEST TO DND SERVER
     const classResponse = await axios.get(
       "https://www.dnd5eapi.co/api/classes"
     );
+    //classResponse is an object of counts, results
     // ----- WE HAVE RESPONSE SO WE ARE BACK TO BEING A SERVER
+
+    // const {
+    //   data: { results: classesArray },
+    // } = await axios.get("https://www.dnd5eapi.co/api/classes");
+    // const randomClasses =
+    //   classesArray[Math.floor(Math.random() * classesArray.length)].name;
 
     const classData = classResponse.data;
     const classesArray = classData.results;
     const randomClasses =
       classesArray[Math.floor(Math.random() * classesArray.length)].name;
     character.classes = randomClasses;
+    console.log(classesArray);
 
     const raceResponse = await axios.get("https://www.dnd5eapi.co/api/races");
     const raceData = raceResponse.data;
@@ -45,9 +53,20 @@ app.get("/submit", async (req, res) => {
     );
     const skillsData = skillsResponse.data;
     const skillsArray = skillsData.results;
-    const randomSkills =
+
+    const skill1 =
       skillsArray[Math.floor(Math.random() * skillsArray.length)].name;
-    character.skills = randomSkills;
+    //character.skills = randomSkills1;
+
+    const skill2 =
+      skillsArray[Math.floor(Math.random() * skillsArray.length)].name;
+
+    if (skill1 === skill2) {
+      do {
+        skill2 =
+          skillsArray[Math.floor(Math.random() * skillsArray.length)].name;
+      } while (skill1 === skill2);
+    }
 
     const damageResponse = await axios.get(
       "https://www.dnd5eapi.co/api/damage-types"
@@ -58,13 +77,13 @@ app.get("/submit", async (req, res) => {
       damageArrray[Math.floor(Math.random() * damageArrray.length)].name;
     character.damageType = randomDamage;
 
-    console.log(randomClasses, randomRace, randomSkills, randomDamage);
-    console.log(character);
+    console.log(randomClasses, randomRace, skill1, skill2, randomDamage);
 
     res.render("index.ejs", {
       dndclass: randomClasses,
       race: randomRace,
-      skills: randomSkills,
+      skill1: skill1,
+      skill2: skill2,
       damage: randomDamage,
     });
   } catch (error) {
