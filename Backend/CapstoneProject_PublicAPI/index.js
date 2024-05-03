@@ -4,17 +4,19 @@ import bodyParser from "body-parser";
 const app = express();
 const port = 3000;
 const dnd_URL = "https://www.dnd5eapi.co/api";
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// app.get("/", (req, res) => {
-//   res.render("index.ejs");
-// });
+app.get("/", (req, res) => {
+  res.render("index1.ejs");
+});
+
 //when MY server gets a request on "/" this function is called
-app.get("/", async (req, res) => {
+app.get("/submit", async (req, res) => {
   try {
     let character = {
-      class: "",
+      classes: "",
       race: "",
       skills: "",
       damageType: "",
@@ -29,15 +31,14 @@ app.get("/", async (req, res) => {
     const classesArray = classData.results;
     const randomClasses =
       classesArray[Math.floor(Math.random() * classesArray.length)].name;
-
-    //console.log(randomClasses);
+    character.classes = randomClasses;
 
     const raceResponse = await axios.get("https://www.dnd5eapi.co/api/races");
     const raceData = raceResponse.data;
     const raceArray = raceData.results;
     const randomRace =
       raceArray[Math.floor(Math.random() * raceArray.length)].name;
-    //console.log(randomRace);
+    character.race = randomRace;
 
     const skillsResponse = await axios.get(
       "https://www.dnd5eapi.co/api/skills"
@@ -46,7 +47,7 @@ app.get("/", async (req, res) => {
     const skillsArray = skillsData.results;
     const randomSkills =
       skillsArray[Math.floor(Math.random() * skillsArray.length)].name;
-    //console.log(randomSkills);
+    character.skills = randomSkills;
 
     const damageResponse = await axios.get(
       "https://www.dnd5eapi.co/api/damage-types"
@@ -55,8 +56,17 @@ app.get("/", async (req, res) => {
     const damageArrray = damageData.results;
     const randomDamage =
       damageArrray[Math.floor(Math.random() * damageArrray.length)].name;
+    character.damageType = randomDamage;
+
     console.log(randomClasses, randomRace, randomSkills, randomDamage);
-    res.render("index.ejs", { data: character });
+    console.log(character);
+
+    res.render("index.ejs", {
+      dndclass: randomClasses,
+      race: randomRace,
+      skills: randomSkills,
+      damage: randomDamage,
+    });
   } catch (error) {
     console.error(error.response.data);
     res.status(500);
