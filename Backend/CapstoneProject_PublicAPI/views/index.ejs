@@ -13,24 +13,25 @@
 
   <body>
     <h1>D&D Character Generator</h1>
+    <div>
+      <h2>Classes</h2>
+      <h3><%=dndclass %></h3>
+      <h2>Race</h2>
+      <h3><%=race %></h3>
 
-    <h2>Classes</h2>
-    <h3><%=dndclass %></h3>
-    <h2>Race</h2>
-    <h3><%=race %></h3>
+      <h2>Skills</h2>
+      <h3><%=skill1 %> <%=skill2 %></h3>
+      <h2>Damage-type</h2>
+      <h3><%=damage %></h3>
 
-    <h2>Skills</h2>
-    <h3><%=skill1 %> <%=skill2 %></h3>
-    <h2>Damage-type</h2>
-    <h3><%=damage %></h3>
-
-    <div class="container">
-      <form action="/" method="GET">
-        <input type="submit" value="Rest" />
-      </form>
-      <form action="/submit" method="GET">
-        <input type="submit" value="Generate Name" />
-      </form>
+      <div class="container">
+        <form action="/" method="GET">
+          <input type="submit" value="Rest" />
+        </form>
+        <form action="/submit" method="GET">
+          <input type="submit" value="Generate Name" />
+        </form>
+      </div>
     </div>
   </body>
 </html>
