@@ -23,26 +23,36 @@ app.get("/", async (req, res) => {
   result.rows.forEach((country) => {
     countries.push(country.country_code);
   });
-  console.log(result.rows);
+  console.log(result);
+  console.log(result.rows); //array
   console.log(countries);
   res.render("index.ejs", { countries: countries, total: countries.length });
-  db.end();
+  //db.end();
 });
 
 //insert new country
 app.post("/add", async (req, res) => {
-  const input =req.body["country"]
-  const result= await db.query("SELECT country_code FROM countries WHERE country_name=$1",[input])
+  const input = req.body["country"];
 
-
-  await db.query(
-    "INSERT INTO visited_countries (country_code)VALUES($1)"
+  const result = await db.query(
+    "SELECT country_code FROM countries WHERE country_name = $1",
+    [input]
   );
+  //$1 is a placeholder which is going to be the input from the user typing in the country
+  //ex France is the input it's going to search our countries table to look for France, find the country code and then store it inside the variable result
+  if (result.rows.length !== 0) {
+    //if countrycode exists
+    const data = result.rows[0];
+    //hold on the data at the first position of the row, and we get the country_code that is inside that piece of data.
+    const countryCode = data.country_code;
 
-
-
-  const result = await db.query("UPDATE visited_countries
+    await db.query("INSERT INTO visited_countries (country_code) VALUES ($1)", [
+      countryCode,
+    ]);
+    res.redirect("/");
+  }
 });
+
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
