@@ -9,7 +9,7 @@ const db = new pg.Client({
   user: "postgres",
   host: "localhost",
   database: "world",
-  password: "123456",
+  password: "postgres",
   port: 5432,
 });
 db.connect();
@@ -20,8 +20,8 @@ app.use(express.static("public"));
 let currentUserId = 1;
 
 let users = [
-  { id: 1, name: "Angela", color: "teal" },
-  { id: 2, name: "Jack", color: "powderblue" },
+  { id: 1, name: "Mo", color: "purple" },
+  { id: 2, name: "Alex", color: "pink" },
 ];
 
 async function checkVisisted() {
@@ -54,7 +54,7 @@ app.get("/", async (req, res) => {
 });
 app.post("/add", async (req, res) => {
   const input = req.body["country"];
-  const currentUser = await getCurrentUser();
+  const currentUserId = await getCurrentUser();
 
   try {
     const result = await db.query(
