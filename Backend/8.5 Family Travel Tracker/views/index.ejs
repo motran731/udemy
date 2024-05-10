@@ -931,7 +931,15 @@
       const country_codes = "<%= countries %>".split(",");
       console.log(typeof "<%= countries %>");
       country_codes.forEach((code) => {
-        document.getElementById(code).style.fill = "<%= color %>";
+        console.log("DOING THIS ONE", code);
+
+        let countryElm = document.getElementById(code);
+
+        if (countryElm) {
+          countryElm.style.fill = "<%= color %>";
+        } else {
+          console.log("Ignoring", code, ", not on map");
+        }
       });
     </script>
   </body>
