@@ -26,7 +26,7 @@ app.get("/", async (req, res) => {
   try {
     const result = await db.query("SELECT * FROM items ORDER BY id ASC");
     items = result.rows;
-    console.log(items);
+    console.log(items); //array
     res.render("index.ejs", {
       listTitle: "Today",
       listItems: items,
@@ -38,8 +38,9 @@ app.get("/", async (req, res) => {
 
 app.post("/add", async (req, res) => {
   const item = req.body.newItem;
+  //item is a string
   //items.push({ title: item });
-
+  console.log(item);
   try {
     await db.query("INSERT INTO items (title) VALUES ($1)", [item]);
     res.redirect("/");
@@ -49,12 +50,25 @@ app.post("/add", async (req, res) => {
 });
 
 app.post("/edit", async (req, res) => {
-  const item = req.body.updatedItemId;
-  //UPDATE items SET title = '' WHERE id =$1
+  const item = req.body.updatedItemTitle;
+  const id = req.body.updatedItemId;
+
+  try {
+    await db.query("UPDATE items SET title = ($1) WHERE id= $2", [item, id]);
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 app.post("/delete", async (req, res) => {
   const deleteItem = req.body.deleteItemId;
+  try {
+    await db.query("DELETE FROM items WHERE items.id =($1)", [deleteItem]);
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 app.listen(port, () => {
