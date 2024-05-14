@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/main.css" />
+    <title>Book List</title>
+  </head>
+
+  <body>
+    <main>
+      <div class="box" id="heading">
+        <h1>Mo</h1>
+        <h1><%= listTitle%></h1>
+      </div>
+
+      <div class="container">
+        <% for(let book of listBooks){%>
+        <div class="book">
+          <ul id="booksList">
+            <li>
+              <h3 id="title <%=book.id%>">Title: <%=book.title %></h3>
+              <h3 id="author <%book.id%>">Author: <%=book.author%></h3>
+            </li>
+            <img
+              src="https://covers.openlibrary.org/b/isbn/<%=book.isbn %>-M.jpg"
+            />
+            <% } %>
+          </ul>
+        </div>
+        <form class="book" action="/add" method="post">
+          <input type="text" name="title" placeholder="Title" />
+          <input type="text" name="author" placeholder="Author" />
+          <input type="text" name="isbn" placeholder="ISBN" />
+          <button class="add" type="submit" name="list" value="<%=listTitle %>">
+            ADD
+          </button>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>
