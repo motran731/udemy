@@ -27,9 +27,26 @@
             <img
               src="https://covers.openlibrary.org/b/isbn/<%=book.isbn %>-M.jpg"
             />
-            <% } %>
           </ul>
+
+          <form class="edit" action="/edit" method="post">
+            <input type="hidden" name="updatedBookId" value="<%= book.id %>" />
+            <input
+              id="input<%=book.id%>"
+              type="text"
+              name="updatedBookTitle"
+              value="<%=book.title%>"
+            />
+            <input
+              type="text"
+              name="updatedBookAuthor"
+              value="<%=book.author%>"
+            />
+            <input type="text" name="updatedBookIsbn" value="<%=book.isbn%>" />
+            <button class="full-width" type="submit">Edit</button>
+          </form>
         </div>
+        <% } %>
         <form class="book" action="/add" method="post">
           <input type="text" name="title" placeholder="Title" />
           <input type="text" name="author" placeholder="Author" />

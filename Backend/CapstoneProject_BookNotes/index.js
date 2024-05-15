@@ -50,6 +50,22 @@ app.post("/add", async (req, res) => {
   }
 });
 
+app.post("/edit", async (req, res) => {
+  const title = req.body.updatedBookTitle;
+  const author = req.body.updatedBookAuthor;
+  const isbn = req.body.updatedBookIsbn;
+  const id = req.body.updatedBookId;
+  try {
+    await db.query(
+      "UPDATE books SET (title=($1), author=($2), isbn=($3) WHERE id=$5",
+      [title, author, isbn, id]
+    );
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.listen(port, () => {
   console.log(`You got served on http://localhost:${port}`);
 });
