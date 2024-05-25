@@ -19,6 +19,7 @@ app.use(
     saveUninitialized: true,
   })
 );
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -56,7 +57,7 @@ app.get("/logout", (req, res) => {
 });
 
 app.get("/secrets", (req, res) => {
-  // console.log(req.user);
+  console.log(req.user);
   if (req.isAuthenticated()) {
     res.render("secrets.ejs");
   } else {
