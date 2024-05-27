@@ -20,7 +20,6 @@ app.use(
     saveUninitialized: true,
   })
 );
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -58,13 +57,17 @@ app.get("/logout", (req, res) => {
 });
 
 app.get("/secrets", (req, res) => {
-  console.log(req.user);
   if (req.isAuthenticated()) {
     res.render("secrets.ejs");
+
+    //TODO: Update this to pull in the user secret to render in secrets.ejs
   } else {
     res.redirect("/login");
   }
 });
+
+//TODO: Add a get route for the submit button
+//Think about how the logic should work with authentication.
 
 app.get(
   "/auth/google",
@@ -80,13 +83,6 @@ app.get(
     failureRedirect: "/login",
   })
 );
-
-app.get("/logout", (req, res) => {
-  req.logout((err) => {
-    if (err) console.log(err); //one liner
-    res.redirect("/");
-  });
-});
 
 app.post(
   "/login",
@@ -129,6 +125,9 @@ app.post("/register", async (req, res) => {
   }
 });
 
+//TODO: Create the post route for submit.
+//Handle the submitted data and add it to the database
+
 passport.use(
   "local",
   new Strategy(async function verify(username, password, cb) {
@@ -141,15 +140,12 @@ passport.use(
         const storedHashedPassword = user.password;
         bcrypt.compare(password, storedHashedPassword, (err, valid) => {
           if (err) {
-            //Error with password check
             console.error("Error comparing passwords:", err);
             return cb(err);
           } else {
             if (valid) {
-              //Passed password check
               return cb(null, user);
             } else {
-              //Did not pass password check
               return cb(null, false);
             }
           }
@@ -173,20 +169,18 @@ passport.use(
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },
     async (accessToken, refreshToken, profile, cb) => {
-      console.log(profile);
       try {
-        const result = await db.query("SELECT * FROM users WHERE email=$1", [
+        console.log(profile);
+        const result = await db.query("SELECT * FROM users WHERE email = $1", [
           profile.email,
         ]);
         if (result.rows.length === 0) {
           const newUser = await db.query(
-            "INSERT INTO users (email, password) VALUES ($1,$2)",
+            "INSERT INTO users (email, password) VALUES ($1, $2)",
             [profile.email, "google"]
           );
-
           return cb(null, newUser.rows[0]);
         } else {
-          //already exisiting user
           return cb(null, result.rows[0]);
         }
       } catch (err) {
@@ -195,10 +189,10 @@ passport.use(
     }
   )
 );
-
 passport.serializeUser((user, cb) => {
   cb(null, user);
 });
+
 passport.deserializeUser((user, cb) => {
   cb(null, user);
 });
