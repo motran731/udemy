@@ -139,6 +139,7 @@ passport.use(
       if (result.rows.length > 0) {
         const user = result.rows[0];
         const storedHashedPassword = user.password;
+        console.log(result.rows.length);
         bcrypt.compare(password, storedHashedPassword, (err, valid) => {
           if (err) {
             //Error with password check

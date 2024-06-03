@@ -19,7 +19,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24,
+      maxAge: 1000 * 60 * 60 * 24, //1000ms * 60 sec* 60min* 24 hr
     },
   })
 );
@@ -56,6 +56,7 @@ app.get("/secrets", (req, res) => {
     res.redirect("/login");
   }
 });
+// if the user is authenticated they can access the secrets page
 
 app.post("/register", async (req, res) => {
   const email = req.body.username;
