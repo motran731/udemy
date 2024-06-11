@@ -17,8 +17,12 @@ function App() {
     setInputText("");
   }
 
-  function deleteItem() {
-    setItems((prevItems) => {});
+  function deleteItem(id) {
+    setItems((prevItems) => {
+      return prevItems.filter((item, index) => {
+        return index !== id;
+      });
+    });
   }
   return (
     <div className="container">
